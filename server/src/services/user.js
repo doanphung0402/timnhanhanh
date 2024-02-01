@@ -2,6 +2,7 @@ import db from '../models'
 import crypto from 'crypto'
 import sendMail from './sendmail'
 import bcrypt from 'bcryptjs'
+import { where } from 'sequelize'
 
 const hashPassword = password => bcrypt.hashSync(password, bcrypt.genSaltSync(12))
 // GET CURRENT
@@ -23,6 +24,21 @@ export const getOne = (id) => new Promise(async (resolve, reject) => {
         reject(error)
     }
 })
+
+export const changeAutoAccept = (isAutoAccept) => new Promise(async (resolve, reject) => {
+     try {
+        const response = await db.Setting.update({auto_accept : isAutoAccept}, {
+            where: { id : 1 }
+        })
+          resolve({
+            err: response[0] > 0 ? 0 : 1,
+            msg: response[0] > 0 ? 'Updated' : 'Failed to update Setting.',
+        })
+     } catch(error){
+         reject(error); 
+     }
+})
+
 export const updateUser = (payload, id) => new Promise(async (resolve, reject) => {
     try {
         const response = await db.User.update(payload, {

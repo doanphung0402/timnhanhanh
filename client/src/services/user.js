@@ -98,3 +98,15 @@ export const apiResetPass = (data) => new Promise(async (resolve, reject) => {
         reject(error)
     }
 })
+export const apiChangeAutoAccept = (data) => new Promise(async (resolve, reject) => {
+    try {
+        const response = await axios({
+            method: 'post',
+            url: '/api/v1/user/autoAccept',
+            data
+        })
+        resolve(response)
+    } catch (error) {
+        reject(error)
+    }
+})

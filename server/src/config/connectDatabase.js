@@ -15,7 +15,6 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, pr
 
 const connectDatabase = async () => {
     try {
-        console.log("🚀 ~ file: connectDatabase.js:5 ~ process.env.DB_PASSWORD:", process.env.DB_NAME)
         await sequelize.authenticate();
         console.log('Connection has been established successfully.');
     } catch (error) {

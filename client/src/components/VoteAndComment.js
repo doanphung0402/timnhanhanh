@@ -11,7 +11,7 @@ const VoteAndComment = ({ votes, star, setIsVote }) => {
     const [seeMore, setSeeMore] = useState(false)
     const { isLoggedIn } = useSelector(state => state.auth)
     return (
-        <div className='shadow-md relative border rounded-md p-[10px] bg-white'>
+        <div className='shadow-md relative border rounded-md p-[10px] bg-white mt-20	'>
             <h3 className='text-base font-bold'>{`Đánh giá & nhận xét tin đăng`}</h3>
             <div className='flex border rounded-md mt-8'>
                 <div className='flex-auto w-2/5 border-r flex flex-col gap-1 items-center justify-center'>

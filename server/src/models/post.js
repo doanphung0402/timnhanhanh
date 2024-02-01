@@ -45,6 +45,13 @@ module.exports = (sequelize, DataTypes) => {
         imagesId: DataTypes.STRING,
         priceNumber: DataTypes.FLOAT,
         areaNumber: DataTypes.FLOAT,
+        numberHouse : DataTypes.STRING, 
+        street :  DataTypes.STRING, 
+        ward :  DataTypes.STRING, 
+        district : DataTypes.STRING, 
+        longitude :  DataTypes.STRING, 
+        latitude :  DataTypes.STRING, 
+        isAccept  : DataTypes.BOOLEAN,
         expired: DataTypes.DATE,
         status: {
             type: DataTypes.ENUM,

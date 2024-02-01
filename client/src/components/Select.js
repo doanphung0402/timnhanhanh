@@ -22,12 +22,24 @@ const Select = ({ label, options, value, setValue, type, reset, name, invalidFie
                 <option value="">{`--Chọn ${label}--`}</option>
                 {options?.map(item => {
                     return (
+                      type != "ward"? (
                         <option
-                            key={type === 'province' ? item?.province_id : type === 'district' ? item?.district_id : item?.code}
-                            value={type === 'province' ? item?.province_id : type === 'district' ? item?.district_id : item?.code}
+                          key={type === 'province' ? item?.province_id : type === 'district' ? item?.district_id : item?.code}
+                          value={type === 'province' ? item?.province_id : type === 'district' ? item?.district_id : item?.code}
                         >
-                            {type === 'province' ? item?.province_name : type === 'district' ? item?.district_name : item?.value}
-                        </option>
+                          {type === 'province' ? item?.province_name : type === 'district' ? item?.district_name : item?.value}
+                       </option>
+                      ):(
+                       
+                            <option
+                            key={item.ward_id}
+                            value={item.ward_id}
+                          >
+                            {item?.ward_name}
+                         </option>
+                        
+                      )
+                    
                     )
                 })}
             </select>

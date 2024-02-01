@@ -6,7 +6,7 @@ import { fileToBase64 } from '../../ultils/Common/tobase64'
 import { getCurrent, logout } from '../../store/actions'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
-import { path } from '../../ultils/constant'
+import { COLOR, path } from '../../ultils/constant'
 
 const EditAccount = () => {
     const { currentData } = useSelector(state => state.user)
@@ -85,8 +85,9 @@ const EditAccount = () => {
 
                     </div>
                     <Button
+                        mb="80px"
                         text='Cập nhật'
-                        bgColor='bg-blue-600'
+                        bgColor={COLOR.PRIMARY_COLOR2}
                         textColor='text-white'
                         onClick={handleSubmit}
                     />

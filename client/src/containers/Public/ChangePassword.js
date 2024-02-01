@@ -9,7 +9,6 @@ const ChangePassword = () => {
     const [invalidFields, setInvalidFields] = useState([])
     const handleChangePassword = async () => {
         const response = await apiForgotPassword(payload)
-        console.log(response)
     }
     return (
         <div className='h-screen bg-white overflow-hidden flex flex-col gap-8 items-center justify-center'>

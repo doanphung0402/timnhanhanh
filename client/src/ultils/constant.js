@@ -19,6 +19,7 @@ export const path = {
     DETAIL_ALL: 'chi-tiet/*',
     ADMIN: '/admin',
     DASHBOARD: 'tong-quan',
+    DASHBOARD1: '/admin/tong-quan',
     MANAGE_USER: 'quan-ly-thanh-vien',
     MANAGE_REPORT: 'bao-cao-vi-pham',
     MANAGE_EXPIRED: 'gia-han-bai-dang',
@@ -30,8 +31,8 @@ export const path = {
 }
 
 export const text = {
-    HOME_TITLE: 'Kênh thông tin Phòng Trọ số 1 Việt Nam',
-    HOME_DESCRIPTION: "Kênh thông tin Phòng Trọ số 1 Việt Nam - Website đăng tin cho thuê phòng trọ, nhà nguyên căn, căn hộ, ở ghép nhanh, hiệu quả với 100.000+ tin đăng và 2.500.000 lượt xem mỗi tháng."
+    HOME_TITLE: 'Tìm kiếm , Đăng tin cho thuê phòng trọ , căn hộ  nhanh chóng',
+    HOME_DESCRIPTION: "Kênh thông tin Phòng Trọ  - Website đăng tin cho thuê phòng trọ, nhà nguyên căn, căn hộ, ở ghép nhanh, hiệu quả với 100.000+ tin đăng và 2.500.000 lượt xem mỗi tháng."
 }
 
 export const location = [
@@ -39,19 +40,19 @@ export const location = [
         id: 'hcm',
         name: 'Phòng trọ Hồ Chí Minh',
         image: 'https://phongtro123.com/images/location_hcm.jpg',
-        provinceCode: 'CUID'
+        provinceCode: 'CIMN'
     },
     {
         name: 'Phòng trọ Hà Nội',
         image: 'https://phongtro123.com/images/location_hn.jpg',
         id: 'hn',
-        provinceCode: 'NDOE'
+        provinceCode: 'NNIA'
     },
     {
         name: 'Phòng trọ Đà nẵng',
         image: 'https://phongtro123.com/images/location_dn.jpg',
         id: 'dn',
-        provinceCode: 'NNNE'
+        provinceCode: 'NMNH'
     },
 ]
 
@@ -98,3 +99,17 @@ export const memuSidebar = [
 
     },
 ]
+
+export const COLOR = {
+     PRIMARY_COLOR : '#84CC16',
+     TEXT_WHITE_COLOR : '#ffffff', 
+     TEXT_BLACK_COLOR:'#222', 
+     PRIMARY_COLOR2 : '#F43032',
+     PRIMARY_COLOR3 :'#ED570E'
+}
+
+export const REACT_APP_MAPBOX_ACCESS_TOKEN= 'pk.eyJ1IjoicGh1bmdkbSIsImEiOiJjbHFvNTd3cXgyeHJiMnVta296MGNuazdnIn0.HJKUPZppIjkPj7Y2oKOF1Q'
+
+export const GOOGLE_MAPS_API_KEY = "AIzaSyD4lH55X7YFsPKicGEhzr8Ym48q4MhVtbs"; 
+
+export const  YOUR_OPENCAGE_API_KEY ='9ebf1b2ec5df40b094b10d2a875610ba'

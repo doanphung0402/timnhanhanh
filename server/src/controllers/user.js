@@ -2,6 +2,18 @@ import * as services from '../services/user'
 import asyncHandler from 'express-async-handler'
 import db from '../models'
 
+export const changeAutoAccept = async (req,res) =>{
+     try {
+         const payload = req.body; 
+         const response = await services.changeAutoAccept(payload.autoAccept1)
+         return res.status(200).json(response)
+      } catch(err){
+        return res.status(500).json({
+            err: -1,
+            msg: 'Failed at user controller: ' + err
+        })
+     }
+}
 export const getCurrent = async (req, res) => {
     const { id } = req.user
     try {

@@ -7,6 +7,9 @@ const router = express.Router()
 
 router.get('/get-current', verifyToken, userController.getCurrent)
 router.get('/roles', verifyToken, isAdmin, userController.getRoles)
+
+router.post('/autoAccept', verifyToken, isAdmin, userController.changeAutoAccept)
+
 router.post('/forgotpassword', userController.forgotPassword)
 router.post('/resetpassword', userController.resetPassword)
 router.get('/', verifyToken, isAdmin, userController.getUsers)

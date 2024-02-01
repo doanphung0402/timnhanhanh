@@ -13,12 +13,12 @@ const Sidebar = () => {
     const dispatch = useDispatch()
     const { currentData } = useSelector(state => state.user)
     return (
-        <div className='w-[280px] flex-none p-4 flex flex-col gap-6'>
+        <div className='w-[200px] flex-none p-4 flex flex-col gap-6'>
             <div className='flex flex-col gap-4'>
                 <div className='flex items-center gap-4'>
                     <img src={currentData?.avatar} alt="avatar" className='w-12 h-12 object-cover rounded-full border-2 border-white' />
                     <div className='flex flex-col justify-center'>
-                        <span className='font-semibold'>{currentData?.name}</span>
+                        <span className='font-semibold text-sm	'>{currentData?.name}</span>
                         <small>{currentData?.phone}</small>
                     </div>
                 </div>
@@ -30,7 +30,7 @@ const Sidebar = () => {
                         <NavLink
                             className={({ isActive }) => isActive
                                 ? `${activeStyle} ${currentData?.role === item.role ? 'hidden' : ''}`
-                                : `${notActiceStyle} ${currentData?.role === item.role ? 'hidden' : ''}`}
+                                : `${notActiceStyle} ${currentData?.role === item.role ? 'hidden' : ''} text-sm	`}
                             key={item.id}
                             to={item?.path}
                         >

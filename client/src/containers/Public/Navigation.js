@@ -6,8 +6,8 @@ import * as actions from '../../store/actions'
 import { path } from '../../ultils/constant'
 
 
-const notActive = 'hover:bg-secondary2 px-4 h-full flex items-center bg-secondary1'
-const active = 'hover:bg-secondary2 px-4 h-full flex items-center  bg-secondary2'
+const notActive = 'hover:bg-[#ED570E] px-4 h-full flex items-center bg-lime-500	'
+const active = 'hover:bg-[#ED570E] px-4 h-full flex items-center  bg-[#ED570E]	'
 
 const Navigation = ({ isAdmin }) => {
 
@@ -18,8 +18,9 @@ const Navigation = ({ isAdmin }) => {
         dispatch(actions.getCategories())
     }, [])
     return (
-        <div className={`w-full flex ${isAdmin ? 'justify-start' : 'justify-center'} items-center h-[40px] bg-secondary1 text-white`}>
-            <div className='w-3/5 flex h-full items-center text-sm font-medium'>
+        <div className={`w-full flex ${isAdmin ? 'justify-start' : 'justify-center'} items-center h-[60px] text-white`}
+            style={{backgroundColor :"#84cc16",marginLeft:'auto',marginRight:'auto'}}>
+            <div className='flex h-full items-center text-sm font-medium  w-[100%] justify-center ' >
                 <NavLink
                     to={`/`}
                     className={({ isActive }) => isActive ? active : notActive}

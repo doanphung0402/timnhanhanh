@@ -1,10 +1,22 @@
 import db, { sequelize } from '../models'
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 import generateCode from '../ultis/generateCode';
 import moment from 'moment'
 import generateDate from '../ultis/generateDate';
 import generateId from 'uniqid'
 import asyncHandler from 'express-async-handler'
+
+export const changeAcceptAdminService = (id) => new Promise(async (resolve,reject) =>{
+     try{
+         const response = await db.Post.update({isAccept : true },{where : {id : id }}); 
+         resolve({
+            err: response[0] > 0 ? 0 : 1,
+            msg: response[0] > 0 ? 'Đã duyệt bài đăng ' : 'Failed to update Post.',
+        })
+     } catch (error){
+        reject(error); 
+     }
+})
 
 export const getPostsService = () => new Promise(async (resolve, reject) => {
     try {
@@ -14,9 +26,12 @@ export const getPostsService = () => new Promise(async (resolve, reject) => {
             includes: [
                 { model: db.Image, as: 'images', attributes: ['image'] },
                 { model: db.Attribute, as: 'attributes', attributes: ['price', 'acreage', 'published', 'hashtag'] },
-                { model: db.User, as: 'user', attributes: ['name', 'zalo', 'phone'] },
+                { model: db.User, as: 'user', attributes: ['name', 'zalo', 'phone','avatar'] },
             ],
-            attributes: ['id', 'title', 'star', 'address', 'description']
+            attributes: ['id', 'title', 'star', 'address', 'description'],
+            where: {
+                isAccept: true
+              }
         })
         resolve({
             err: response ? 0 : 1,
@@ -35,7 +50,7 @@ export const getPostById = (pid) => new Promise(async (resolve, reject) => {
             include: [
                 { model: db.Image, as: 'images', attributes: ['image'] },
                 { model: db.Attribute, as: 'attributes', attributes: ['price', 'acreage', 'published', 'hashtag'] },
-                { model: db.User, as: 'user', attributes: ['name', 'zalo', 'phone'] },
+                { model: db.User, as: 'user', attributes: ['name', 'zalo', 'phone','avatar'] },
                 { model: db.Overview, as: 'overviews' },
                 { model: db.Label, as: 'labelData', attributes: { exclude: ['createdAt', 'updatedAt'] } },
                 {
@@ -66,18 +81,35 @@ export const getPostById = (pid) => new Promise(async (resolve, reject) => {
         reject(error)
     }
 })
-export const getPostsLimitService = (page, { limitPost, order, ...query }, { priceNumber, areaNumber }) => new Promise(async (resolve, reject) => {
+export const getPostsLimitService = (page,districtId, { limitPost, order, ...query }, { priceNumber, areaNumber },customTime,isAccept) => new Promise(async (resolve, reject) => {
+    if (isAccept === undefined) isAccept = 1
     try {
-        let offset = (!page || +page <= 1) ? 0 : (+page - 1)
+        let offset = (!page || +page < 0) ? 0 : (page-1)
+        if  (offset<0) offset = 0 ; 
         const queries = { ...query }
+
         // query.expired = { [Op.gte]: Date.now() }
         const limit = +limitPost || +process.env.LIMIT
         queries.limit = limit
+        if(districtId) query.district = districtId
+        
         if (priceNumber) query.priceNumber = { [Op.between]: priceNumber }
         if (areaNumber) query.areaNumber = { [Op.between]: areaNumber }
         if (order) queries.order = [order]
+        if (customTime){
+            const customTime1 =JSON.parse(customTime) ; 
+            const endDate = new Date(customTime1?.endDate); 
+            const startDate = new Date(customTime1?.startDate); 
+            if (startDate && endDate){
+                query.createdAt = {
+                   [Op.between]: [startDate, endDate]
+                 }
+           }
+        }
+        const whereCondition = isAccept !== ''  ? { isAccept: isAccept } : {};
+
         const response = await db.Post.findAndCountAll({
-            where: query,
+            // where : query,
             raw: true,
             nest: true,
             offset: offset * limit,
@@ -85,7 +117,7 @@ export const getPostsLimitService = (page, { limitPost, order, ...query }, { pri
             include: [
                 { model: db.Image, as: 'images', attributes: ['image'] },
                 { model: db.Attribute, as: 'attributes', attributes: ['price', 'acreage', 'published', 'hashtag'] },
-                { model: db.User, as: 'user', attributes: ['name', 'zalo', 'phone'] },
+                { model: db.User, as: 'user', attributes: ['name', 'zalo', 'phone','avatar'] },
                 { model: db.Overview, as: 'overviews' },
                 { model: db.Label, as: 'labelData', attributes: { exclude: ['createdAt', 'updatedAt'] } },
                 { model: db.Category, as: 'category', attributes: ['code', 'value'] },
@@ -95,7 +127,13 @@ export const getPostsLimitService = (page, { limitPost, order, ...query }, { pri
                     attributes: { exclude: ['createdAt', 'updatedAt'], attributes: ['id'] },
                 },
             ],
-            attributes: ['id', 'title', 'star', 'address', 'description', 'createdAt']
+            attributes: ['id', 'title', 'star', 'address', 'description', 'createdAt','isAccept'],
+            where: {
+                ...query,
+                ...whereCondition
+            
+              },
+         
         })
         resolve({
             err: response ? 0 : 1,
@@ -120,7 +158,10 @@ export const getNewPostService = () => new Promise(async (resolve, reject) => {
                 { model: db.Image, as: 'images', attributes: ['image'] },
                 { model: db.Attribute, as: 'attributes', attributes: ['price', 'acreage', 'published', 'hashtag'] },
             ],
-            attributes: ['id', 'title', 'star', 'createdAt']
+            attributes: ['id', 'title', 'star', 'createdAt'],
+            where: {
+                isAccept: true
+              }
         })
         resolve({
             err: response ? 0 : 1,
@@ -140,6 +181,9 @@ export const createNewPostService = (body, userId) => new Promise(async (resolve
         const labelCode = generateCode(body.label)
         const hashtag = `#${Math.floor(Math.random() * Math.pow(10, 6))}`
         const currentDate = generateDate();
+          
+        const isAcceptDb = await db.Setting.findOne({where:{id : 1 }}); 
+        
         await db.Post.create({
             id: generateId(),
             title: body.title,
@@ -156,7 +200,16 @@ export const createNewPostService = (body, userId) => new Promise(async (resolve
             priceCode: body.priceCode || null,
             provinceCode: body?.province?.includes('Thành phố') ? generateCode(body?.province?.replace('Thành phố ', '')) : generateCode(body?.province?.replace('Tỉnh ', '')) || null,
             priceNumber: body.priceNumber,
-            areaNumber: body.areaNumber
+            areaNumber: body.areaNumber, 
+            isAccept : isAcceptDb.auto_accept, 
+            numberHouse : body.numberHouse, 
+            street : body.street, 
+            ward : body.ward, 
+            district : body.district, 
+
+            longitude : body.longitude, 
+            latitude : body.latitude
+
         })
         await db.Attribute.create({
             id: attributesId,
@@ -220,7 +273,7 @@ export const getPostsLimitAdminService = (page, id, { status, ...query }) => new
             raw: true,
             nest: true,
             offset: offset * +process.env.LIMIT,
-            limit: +process.env.LIMIT,
+            limit: +process.env.LIMIT + 5,
             order: [['createdAt', 'DESC']],
             include: [
                 { model: db.Image, as: 'images', attributes: ['image'] },
@@ -392,7 +445,7 @@ export const getWishlist = ({ uid }) => new Promise(async (resolve, reject) => {
                     model: db.Post, as: 'wishlistData', include: [
                         { model: db.Image, as: 'images', attributes: ['image'] },
                         { model: db.Attribute, as: 'attributes', attributes: ['price', 'acreage', 'published', 'hashtag'] },
-                        { model: db.User, as: 'user', attributes: ['name', 'zalo', 'phone'] },
+                        { model: db.User, as: 'user', attributes: ['name', 'zalo', 'phone','avatar'] },
                         { model: db.Overview, as: 'overviews' },
                         { model: db.Label, as: 'labelData', attributes: { exclude: ['createdAt', 'updatedAt'] } },
                         { model: db.Category, as: 'category', attributes: ['code', 'value'] },

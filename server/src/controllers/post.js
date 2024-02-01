@@ -2,6 +2,18 @@ import * as postService from '../services/post'
 import asyncHandler from 'express-async-handler'
 import db from '../models'
 import { sequelize } from '../models'
+export const updateAcceptAdminPost = async (req,res)=>{
+      const id = req.body.id
+      try {
+         const response = await postService.changeAcceptAdminService(id); 
+         return res.status(200).json(response)
+      } catch(err){
+        return res.status(500).json({
+            err: -1,
+            msg: 'Failed at post controller: ' + err
+        })
+     }
+}
 
 export const getPosts = async (req, res) => {
     try {
@@ -16,9 +28,10 @@ export const getPosts = async (req, res) => {
     }
 }
 export const getPostsLimit = async (req, res) => {
-    const { page, priceNumber, areaNumber, ...query } = req.query
+    const { page, priceNumber, areaNumber , customTime,isAccept,districtId,districtName,  ...query } = req.query
+   
     try {
-        const response = await postService.getPostsLimitService(page, query, { priceNumber, areaNumber })
+        const response = await postService.getPostsLimitService(page,districtId, query, { priceNumber, areaNumber},customTime,isAccept)
         return res.status(200).json(response)
 
     } catch (error) {

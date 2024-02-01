@@ -70,7 +70,7 @@ const ButtonWrapper = ({ currency, showSpinner, amount, pid, days, setIsExpired,
 
 export default function Paypal({ amount, pid, days, setIsExpired, setUpdateData }) {
     return (
-        <div style={{ maxWidth: "750px", minHeight: "200px" }}>
+        <div style={{ maxWidth: "235px", minHeight: "160px" }}>
             <PayPalScriptProvider
                 options={{
                     "client-id": "test",

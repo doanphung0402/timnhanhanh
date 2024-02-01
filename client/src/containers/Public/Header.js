@@ -3,7 +3,7 @@ import logo from '../../assets/logo.png'
 import { Button, User } from '../../components'
 import icons from '../../ultils/icons'
 import { useNavigate, Link, useSearchParams, useLocation } from 'react-router-dom'
-import { path } from '../../ultils/constant'
+import { COLOR, path } from '../../ultils/constant'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../../store/actions'
 import menuManage from '../../ultils/menuManage'
@@ -29,7 +29,7 @@ const Header = () => {
     }, [searchParams.get('page'), location.pathname])
 
     return (
-        <div ref={headerRef} className='w-3/5 '>
+        <div ref={headerRef} className='w-70 '>
             <div className='w-full flex items-center justify-between'>
                 <Link to={'/'} >
                     <img
@@ -43,23 +43,23 @@ const Header = () => {
                         <small>TimNhaNhanh.com xin chào !</small>
                         <Button
                             text={'Đăng nhập'}
-                            textColor='text-white'
-                            bgColor='bg-[#3961fb]'
+                            bgColor={COLOR.PRIMARY_COLOR}
                             onClick={() => goLogin(false)}
                         />
                         <Button
                             text={'Đăng ký'}
                             textColor='text-white'
-                            bgColor='bg-[#3961fb]'
+                            bgColor='#FFB534'
                             onClick={() => goLogin(true)}
                         />
                     </div>}
                     {isLoggedIn && <div className='flex items-center gap-3 relative'>
                         <User />
                         <Button
+                            width={"194px"}
                             text={'Quản lý tài khoản'}
                             textColor='text-white'
-                            bgColor='bg-blue-700'
+                            bgColor= {COLOR.PRIMARY_COLOR3}
                             px='px-4'
                             IcAfter={BsChevronDown}
                             onClick={() => currentData?.role === 'R3' ? navigate('/he-thong/sua-thong-tin-ca-nhan') : setIsShowMenu(prev => !prev)}
@@ -116,6 +116,7 @@ const Header = () => {
                     {(currentData?.role === 'R1' || currentData?.role === 'R2') && <Button
                         text={'Đăng tin mới'}
                         textColor='text-white'
+                        width={"170px"}
                         bgColor='bg-secondary2'
                         IcAfter={AiOutlinePlusCircle}
                         onClick={() => navigate('/he-thong/tao-moi-bai-dang')}

@@ -54,8 +54,10 @@ function App() {
           <Route path={path.MANAGE_USER} element={<ManageUser />} />
           <Route path={path.EDIT_ACCOUNT} element={<EditAccount />} />
           <Route path={path.MANAGE_REPORT} element={<ManageReport />} />
-          <Route path={path.DASHBOARD} element={<Dashboard />} />
+
         </Route>
+        <Route path={path.DASHBOARD1} element={<Dashboard />} />
+
       </Routes>
       <ToastContainer
         position="top-right"

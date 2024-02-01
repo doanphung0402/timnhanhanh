@@ -1,6 +1,10 @@
 import actionTypes from './actionTypes'
 import * as apis from '../../services'
-
+import {
+    apiGetPublicProvinces,
+    apiGetPublicDistrict,
+    apiGetPublicWard,
+  } from "../../services";
 
 export const getCategories = () => async (dispatch) => {
     try {
@@ -72,6 +76,7 @@ export const getAreas = () => async (dispatch) => {
         })
     }
 }
+
 export const getProvinces = () => async (dispatch) => {
     try {
         const response = await apis.apiGetProvinces()

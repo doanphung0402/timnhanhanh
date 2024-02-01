@@ -1,6 +1,18 @@
 import axiosConfig from '../axiosConfig'
 import axios from 'axios'
 
+export const apiChangeIsAccept = (id) => new Promise(async (resolve, reject) => {
+    try {
+        const response = await axiosConfig({
+            method: 'post',
+            url: `/api/v1/post/accept-post`,
+            data : {id}
+        })
+        resolve(response)
+    } catch (error) {
+        reject(error)
+    }
+})
 export const apiGetPosts = () => new Promise(async (resolve, reject) => {
     try {
         const response = await axiosConfig({

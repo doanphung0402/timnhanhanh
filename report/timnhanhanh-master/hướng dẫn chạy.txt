@@ -1,4 +1,0 @@
-Đảm bảo máy đã cài nodejs và npm .Nếu chưa hãy cài hai công cụ này.
-b1 : trong thư mục "client" và "server" lần lượt mở cmd va chạy lệnh "npm i" 
-b2 :Sau đó lần lượt chạy lệnh "npm start" 
-b3 Hoàn thành 

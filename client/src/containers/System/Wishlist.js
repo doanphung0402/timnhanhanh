@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 const Wishlist = () => {
 
     const [wishlist, setWishlist] = useState(null)
+    console.log("🚀 ~ Wishlist ~ wishlist:", wishlist)
     const [update, setUpdate] = useState(false)
     const { currentData } = useSelector(state => state.user)
     const fetchWishlist = async () => {
@@ -19,21 +20,21 @@ const Wishlist = () => {
         <div>
             <h1 className='text-[24px] font-semibold'>Bài đăng đã thích</h1>
             <div>
-                {wishlist?.map(el => (
-                    <Item
+                {wishlist?.map(el => {
+                     return ( <Item
                         key={el.id}
                         address={el?.wishlistData?.address}
                         attributes={el?.wishlistData?.attributes}
-                        description={el?.wishlistData?.description?.length > 0 ? el?.wishlistData?.description : JSON.parse(el?.wishlistData?.description)}
-                        images={JSON.parse(el?.wishlistData?.images?.image)}
+                        description={el?.wishlistData?.description?.length > 0 ? el?.wishlistData?.description : JSON.parse(el?.wishlistData?.description===undefined?null:el?.wishlistData?.description)}
+                        images={JSON.parse(el?.wishlistData?.images?.image===undefined?null:el?.wishlistData?.images?.image)}
                         star={+el?.wishlistData?.star}
                         title={el?.wishlistData?.title}
                         user={el?.wishlistData?.user}
                         id={el?.wishlistData?.id}
                         islover={el?.wishlistData?.lovers?.some(i => currentData?.id === i.uid)}
                         setUpdate={setUpdate}
-                    />
-                ))}
+                    />)
+                })}
             </div>
         </div>
     )

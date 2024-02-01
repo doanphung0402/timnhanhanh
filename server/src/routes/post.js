@@ -16,6 +16,7 @@ router.get('/get-rp', verifyToken, postController.getReports)
 router.put('/update-rp', verifyToken, isAdmin, postController.updateReport)
 router.delete('/remove-rp', verifyToken, isAdmin, postController.deleteReport)
 router.get('/dashboard', verifyToken, isAdmin, postController.getDashboard)
+router.post('/accept-post', verifyToken, isAdmin, postController.updateAcceptAdminPost)
 
 router.use(verifyToken)
 router.post('/ratings', postController.ratings)
