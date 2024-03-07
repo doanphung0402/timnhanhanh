@@ -359,7 +359,7 @@ export const getDashboard = asyncHandler(async (req, res) => {
     // Só lượng bài đăng
     const { days, type, from, to } = req.query
     const daysQuery = days || 220
-    const typeDate = type === 'month' ? '%m-%y' : '%d-%m-%y'
+    const typeDate = type === 'month' ?  'MM-YY' : 'DD-MM-YY'
     const start = from || Date.now() - daysQuery * 24 * 60 * 60 * 1000
     const end = to || Date.now()
     const q = {}
@@ -373,7 +373,7 @@ export const getDashboard = asyncHandler(async (req, res) => {
         db.Post.findAll({
             where: { ...q, categoryCode: 'CTPT' },
             attributes: [
-                [sequelize.fn('date_format', sequelize.col('createdAt'), typeDate), 'createdAt'],
+                [sequelize.fn('TO_CHAR', sequelize.col('createdAt'), typeDate), 'createdAt'],
                 [sequelize.fn('count', sequelize.col('id')), 'counter']
             ],
             group: 'createdAt',
@@ -382,7 +382,7 @@ export const getDashboard = asyncHandler(async (req, res) => {
         db.Post.findAll({
             where: { ...q, categoryCode: 'CTMB' },
             attributes: [
-                [sequelize.fn('date_format', sequelize.col('createdAt'), typeDate), 'createdAt'],
+                [sequelize.fn('TO_CHAR', sequelize.col('createdAt'), typeDate), 'createdAt'],
                 [sequelize.fn('count', sequelize.col('id')), 'counter']
             ],
             group: 'createdAt',
@@ -391,7 +391,7 @@ export const getDashboard = asyncHandler(async (req, res) => {
         db.Post.findAll({
             where: { ...q, categoryCode: 'CTCH' },
             attributes: [
-                [sequelize.fn('date_format', sequelize.col('createdAt'), typeDate), 'createdAt'],
+                [sequelize.fn('TO_CHAR', sequelize.col('createdAt'), typeDate), 'createdAt'],
                 [sequelize.fn('count', sequelize.col('id')), 'counter']
             ],
             group: 'createdAt',
@@ -400,7 +400,7 @@ export const getDashboard = asyncHandler(async (req, res) => {
         db.Post.findAll({
             where: { ...q, categoryCode: 'NCT' },
             attributes: [
-                [sequelize.fn('date_format', sequelize.col('createdAt'), typeDate), 'createdAt'],
+                [sequelize.fn('TO_CHAR', sequelize.col('createdAt'), typeDate), 'createdAt'],
                 [sequelize.fn('count', sequelize.col('id')), 'counter']
             ],
             group: 'createdAt',

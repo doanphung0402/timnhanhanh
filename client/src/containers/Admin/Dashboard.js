@@ -45,6 +45,7 @@ const { HiUserGroup, MdPersonAddAlt1, MdOutlinePostAdd } = icons;
 
 const Dashboard = () => {
   const [data, setData] = useState(null);
+  console.log("🚀 ~ Dashboard ~ data:", data)
   const [isMonth, setIsMonth] = useState(false);
   const [newPosts, setNewPosts] = useState(null);
   const [customTime, setCustomTime] = useState({
@@ -68,6 +69,7 @@ const Dashboard = () => {
         isAccept: "",
       }),
     ]);
+
     if (response[0].data.success) setData(response[0].data.chartData);
     if (response[1].data.err === 0) {
       setNewPosts(response[1].data.response.rows);

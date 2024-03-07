@@ -4,12 +4,15 @@ import { Chart } from 'chart.js/auto'
 import { getDaysInMonth, getMonthInYear, getDaysInRange, getMonthsInRange } from '../ultils/fn'
 
 const ChartLine = ({ data, isMonth, customTime }) => {
+
+  
     const [chartData, setChartData] = useState([])
     useEffect(() => {
         // const number = isMonth
         //     ? getMonthsInRange(customTime?.from, customTime?.to)
         //     : getDaysInRange(customTime?.from, customTime?.to)
         const daysInMonth = getDaysInMonth(Date.now(), 15)
+       
         const monthsInYear = getMonthInYear(Date.now(), 15)
         const rawData = isMonth ? monthsInYear : daysInMonth
         const editedData = rawData.map(el => {

@@ -19,7 +19,6 @@ const initRoutes = (app) => {
     app.use('/api/v1/province', provinceRouter)
     app.use('/api/v1/comment', comment)
     app.use('/api/v1/user', userRouter)
-
     app.use(notFound)
     app.use(errorHandler)
 

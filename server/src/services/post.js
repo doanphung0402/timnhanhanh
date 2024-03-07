@@ -82,7 +82,7 @@ export const getPostById = (pid) => new Promise(async (resolve, reject) => {
     }
 })
 export const getPostsLimitService = (page,districtId, { limitPost, order, ...query }, { priceNumber, areaNumber },customTime,isAccept) => new Promise(async (resolve, reject) => {
-    if (isAccept === undefined) isAccept = 1
+    if (isAccept === undefined) isAccept =true 
     try {
         let offset = (!page || +page < 0) ? 0 : (page-1)
         if  (offset<0) offset = 0 ; 
@@ -106,6 +106,7 @@ export const getPostsLimitService = (page,districtId, { limitPost, order, ...que
                  }
            }
         }
+
         const whereCondition = isAccept !== ''  ? { isAccept: isAccept } : {};
 
         const response = await db.Post.findAndCountAll({

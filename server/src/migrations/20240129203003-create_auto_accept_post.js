@@ -5,7 +5,7 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     return queryInterface.addColumn('Posts', 'isAccept', {
       type: Sequelize.BOOLEAN,
-      allowNull: false, // Tùy thuộc vào yêu cầu của bạn
+      allowNull: true, // Tùy thuộc vào yêu cầu của bạn
     });
   },
 

@@ -5,15 +5,15 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     queryInterface.addColumn("Posts", "numberHouse", {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
     });
     queryInterface.addColumn("Posts", "longitude", {
       type: Sequelize.DOUBLE,
-      allowNull: false,
+      allowNull: true,
     });
     queryInterface.addColumn("Posts", "latitude", {
       type: Sequelize.DOUBLE,
-      allowNull: false,
+      allowNull: true,
     });
    
   },

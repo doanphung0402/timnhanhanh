@@ -5,12 +5,12 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, pr
     host: process.env.DB_HOST,
     dialect: process.env.DB_DIALECT,
     logging: false,
-    // dialectOptions: {
-    //     ssl: {
-    //         require: true, // This will help you. But you will see nwe error
-    //         rejectUnauthorized: false // This line will fix new error
-    //     }
-    // },
+    dialectOptions: {
+        ssl: {
+            require: true, // This will help you. But you will see nwe error
+            rejectUnauthorized: false // This line will fix new error
+        }
+    },
 });
 
 const connectDatabase = async () => {

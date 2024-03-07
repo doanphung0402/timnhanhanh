@@ -5,7 +5,7 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     queryInterface.addColumn("Posts", "district", {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true ,
     });
   },
 
